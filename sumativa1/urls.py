@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.agregarReserva, name='inicio'),
     path('eliminar/<int:id>',views.eliminarReserva, name='eliminar_reserva'),
-    path('actualizar/<int:id>',views.actualizarReserva, name='actualizar_reserva')
-
+    path('actualizar/<int:id>',views.actualizarReserva, name='actualizar_reserva'),
+    path('reserva/<int:id>/pdf/', views.descargar_pdf_reserva, name='descargar_pdf_reserva'),
 ]
+

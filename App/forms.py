@@ -16,22 +16,24 @@ class FormReserva(forms.ModelForm):
     )
     
     fechareserva=forms.DateField(widget=forms.widgets.DateInput(attrs={'type':'date'}),label='Fecha Reserva')
+    fechaNacimiento=forms.DateField(widget=forms.widgets.DateInput(attrs={'type':'date'}),label='Fecha Nacimiento')
     horareserva=forms.TimeField(widget=forms.widgets.TimeInput(attrs={'type':'time','fromat':'%H:%M'}),label='Hora Reserva')
     observaciones=forms.CharField(widget=forms.Textarea(attrs={'rows':4,'cols':50}))
-
     estadoReservaId=forms.ModelChoiceField(queryset=EstadoReserva.objects.all(),label='Estado Reserva')
     estadoReservaId.widget.attrs['class']='form-select'
-
     imagenCarnet=forms.ImageField(label='Imagen Carnet')
-    
     tipoSolicitudId=forms.ModelChoiceField(queryset=TipoReserva.objects.all(),label='Tipo Reserva')
     tipoSolicitudId.widget.attrs['class']='form-select'
 
+
+
     def clean_edad(self):
-        edad=self.cleaned_data.get('edad')
+        fecha_nacimiento=self.cleaned_data.get('fechaNacimiento')
+        reserva=Reserva(fechaNacimiento=fecha_nacimiento)
+        edad=reserva.calcular_edad()
         if edad <18:
             raise forms.ValidationError('Debe ser mayor de edad')
-        return edad
+        return fecha_nacimiento
 
     def clean_nombre(self):
         nombre=self.cleaned_data.get('nombre')

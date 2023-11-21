@@ -26,24 +26,33 @@
                 <thead>
                     <tr>
                         <th>Nombre</th>
+                        <th>Edad</th>
                         <th>Telefono</th>
                         <th>Fecha reserva</th>
                         <th>Hora reserva</th>
                         <th>Email</th>
-                        <th>Fecha creacion</th>
+                        <th>Fecha Solicitud</th>
                         <th>Fecha modificiacion</th>
+                        <th>Enlace descarga pdf</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for reserva in reservas %}
                     <tr>
                         <td>{{reserva.nombre}}</td>
+                        <td>{{reserva.calcular_edad}}</td>
                         <td>{{reserva.telefono}}</td>
                         <td>{{reserva.fechareserva}}</td>
                         <td>{{reserva.horareserva}}</td>
                         <td>{{reserva.email}}</td>
                         <td>{{reserva.F_Creacion}}</td>
                         <td>{{reserva.F_Modificacion}}</td>
+                        <td>
+                            <a href="{% url 'descargar_pdf_reserva' id=reserva.idSolicitud %}">
+                                Descargar
+                            </a>
+                        </td>
+                        
                         <td>
                             <a class="btn btn-success btn-small" href="actualizar/{{reserva.idSolicitud}}">
                                 <i class="bi bi-pencil-fill"></i>
