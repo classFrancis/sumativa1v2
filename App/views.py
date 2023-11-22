@@ -9,6 +9,7 @@ from django.core.mail import EmailMessage
 import qrcode
 from django.core.files import File
 from io import BytesIO
+import json
 from .forms import *
 from .models import *
 
@@ -105,7 +106,7 @@ def reserva_email(request):
             pdf=generar_pdf_temporal(reserva)
             email=EmailMessage(
                 'Confirmación de Reserva',
-                f'Hola {reserva.nombre}, tu reserva ha sido confirmada. Encuentra adjunto el PDF con los detalles.',
+                f'Hola {reserva.nombre}, tu reserva ha sido confirmada. Aqui el PDF con los detalles.',
                 'tuemaildeapp@gmail.com',
             )
             email.attach('reserva.pdf',pdf.read(),'application/pdf')
@@ -120,8 +121,13 @@ def reserva_email(request):
 
 #Generar qr
 def generar_qr(reserva):
-    datos_qr=str(reserva.idSolicitud)
-    qr=qrcode.QRCode(
+    datos_reserva = {
+        "idSolicitud": reserva.idSolicitud,
+        "nombre": reserva.nombre,
+        "fechaReserva": reserva.fechareserva.isoformat(),
+    }
+    datos_qr = json.dumps(datos_reserva)
+    qr = qrcode.QRCode(
         version=1,
         error_correction=qrcode.constants.ERROR_CORRECT_L,
         box_size=10,
@@ -129,9 +135,8 @@ def generar_qr(reserva):
     )
     qr.add_data(datos_qr)
     qr.make(fit=True)
-    img=qr.make_image(fill_color='black',back_color='white')
-
-    buffer=BytesIO()
+    img = qr.make_image(fill_color='black', back_color='white')
+    buffer = BytesIO()
     img.save(buffer)
     buffer.seek(0)
 
