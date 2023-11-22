@@ -34,6 +34,8 @@
                         <th>Fecha Solicitud</th>
                         <th>Fecha modificiacion</th>
                         <th>Enlace descarga pdf</th>
+                        <th>Enlace de envio pdf</th>
+                        <th>Ver reserva con QR</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -52,7 +54,18 @@
                                 Descargar
                             </a>
                         </td>
-                        
+                        <td>
+                            <a href="{% url 'reserva_email' %}">
+                                Enviar documento por Email
+                            </a>
+                        </td>
+                        <td>
+                            {% if reserva.codigo_qr %}
+                                <img src="{{ reserva.codigo_qr.url }}" alt="Código QR" style="width: 110%;"/>
+                            {% else %}
+                                <p>No hay código QR disponible.</p>
+                            {% endif %}
+                        </td>
                         <td>
                             <a class="btn btn-success btn-small" href="actualizar/{{reserva.idSolicitud}}">
                                 <i class="bi bi-pencil-fill"></i>

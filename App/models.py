@@ -29,7 +29,8 @@ class Reserva(models.Model):
     email=models.EmailField()
     donante=models.BooleanField()
     imagenCarnet=models.ImageField(upload_to='media/')
-    F_Creacion=models.DateTimeField(editable=False)
+    codigo_qr=models.ImageField(upload_to='media/',blank=True,null=True)
+    F_Creacion=models.DateTimeField()
     F_Modificacion=models.DateTimeField()
 
     estadoReservaId=models.ForeignKey(EstadoReserva,null=True,blank=False,on_delete=models.RESTRICT)

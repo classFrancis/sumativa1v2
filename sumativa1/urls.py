@@ -26,5 +26,10 @@ urlpatterns = [
     path('eliminar/<int:id>',views.eliminarReserva, name='eliminar_reserva'),
     path('actualizar/<int:id>',views.actualizarReserva, name='actualizar_reserva'),
     path('reserva/<int:id>/pdf/', views.descargar_pdf_reserva, name='descargar_pdf_reserva'),
+    path('enviar_reserva/', views.reserva_email, name='reserva_email'),
+
+
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

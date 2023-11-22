@@ -7,7 +7,7 @@ class FormReserva(forms.ModelForm):
     class Meta:
         model = Reserva
         fields = '__all__'
-        exclude = ['F_Modificacion']
+        exclude = ['F_Creacion','F_Modificacion','codigo_qr']
 
     ESTADOS_CHOICE=(
         ('guardado','GUARDADO'),
